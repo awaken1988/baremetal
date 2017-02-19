@@ -7,7 +7,7 @@ OBJCOPY=$(CROSS_PREFIX)objcopy
 CFLAGS= -Wall -ggdb
 LDFLAGS= -nostartfiles -nodefaultlibs -ggdb
 
-.PHONY=all
+.PHONY=all clean gdb
 
 all: out/program.elf
 	$(OBJDUMP) -D out/program.elf > out/program.dis
@@ -30,8 +30,10 @@ clean:
 	-rm -f out/program.dis
 	-rm -f out/program.bin
 
-.PHONY=qemu
 qemu: all
 	qemu-system-aarch64 	-M virt \
 												-cpu cortex-a57	\
 												-kernel out/program.elf
+
+gdb: all
+	aarch64-none-elf-gdb --command=gdb.cmd
