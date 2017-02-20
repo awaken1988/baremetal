@@ -11,8 +11,17 @@ ENTRY(reset_entry)
 SECTIONS
 {
   .text : { *(.text) }          >RAM
+
   .data : { *(.data) }          >RAM
-  .bss : {  *(.bss) *(COMMON) } >RAM
+
+  .bss :
+  {
+    . = ALIGN(8);
+    _bss_start = .;
+    *(.bss) *(COMMON)
+    . = ALIGN(8);
+    _bss_end = .;
+  } >RAM
 
   . += 4096;
   . = ALIGN(8);

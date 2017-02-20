@@ -1,11 +1,13 @@
 void print_uart0(const char *s);
 
-
+int array[32];
 
 int main()
 {
   int sum = 0;
   int addme = 0x100000;
+
+  print_uart0("hallo welt!");
 
   while(1) {
     sum += addme;

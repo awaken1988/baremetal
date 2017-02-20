@@ -18,7 +18,9 @@ all: out/program.elf
 
 out/program.elf:	out/startup.o out/main.o
 	$(dir_guard)
-	$(CC) $(CFLAGS) $(LDFLAGS) -T linker.ld $^ -o out/program.elf
+	$(CC) $(CFLAGS) $(LDFLAGS) 	-T linker.ld 										\
+															-Wl,-Map,out/program.map $^ 		\
+															-o out/program.elf
 
 out/startup.o: startup.s
 	$(dir_guard)
@@ -36,11 +38,12 @@ clean:
 	-rm -f out/program.dis
 	-rm -f out/program.bin
 	-rm -f out/main.o
+	-rm -f out/program.map
 
 qemu: all
 	$(dir_guard)
-	qemu-system-aarch64 	-M virt \
-												-cpu cortex-a57	\
+	qemu-system-aarch64 	-M virt 								\
+												-cpu cortex-a57					\
 												-kernel out/program.elf
 
 gdb: all
