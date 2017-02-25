@@ -10,6 +10,8 @@ ENTRY(reset_entry)
 
 SECTIONS
 {
+
+
   .text : { *(.text) }          >RAM
 
   .data : { *(.data) }          >RAM
