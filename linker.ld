@@ -1,6 +1,6 @@
 MEMORY
 {
-  RAM (rwx) : org = 0x40000000, l = 1M
+  RAM (rwx) : org = 0x40000000, l = 32M
 }
 
 SEARCH_DIR(out)
@@ -24,6 +24,14 @@ SECTIONS
     . = ALIGN(8);
     _bss_end = .;
   } >RAM
+
+  .heap :
+  {
+    . = ALIGN(0x100000);
+    heap_start = .;
+    . += 0x100000;
+    heap_end = .;
+  }
 
   . += 4096;
   . = ALIGN(8);

@@ -16,11 +16,18 @@ all: out/program.elf
 	$(OBJCOPY) -O binary out/program.elf out/program.bin
 
 
-out/program.elf:	out/startup.o out/main.o
+out/program.elf:	out/startup.o			\
+	 								out/main.o 				\
+									out/kernel_lib.o
 	$(dir_guard)
 	$(CC) $(CFLAGS) $(LDFLAGS) 	-T linker.ld 										\
-															-Wl,-Map,out/program.map $^ 		\
-															-o out/program.elf
+															-Wl,-Map,out/program.map 				\
+															-o out/program.elf							\
+															$^
+
+out/kernel_lib.o: kernel_lib.c
+	$(dir_guard)
+	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -o out/kernel_lib.o
 
 out/startup.o: startup.s
 	$(dir_guard)

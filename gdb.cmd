@@ -1,8 +1,14 @@
 set confirm off
 file out/program.elf
 target remote | qemu-system-aarch64 -M virt -cpu cortex-a57 -kernel out/program.elf -gdb stdio -S -semihosting
-layout regs
+#layout regs
+layout src
 
+set print array on
+set print repeats 0
+
+define print_malloc_entries
+  print/x *((struct malloc_entry_kt*)(&heap_end-16*8))@8
 
 
 define cpsr_flags
