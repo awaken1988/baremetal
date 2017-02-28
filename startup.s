@@ -14,7 +14,7 @@ exception_table_start:
 	.org 0x080
 		b not_handled_exception
 	.org 0x100
-			b not_handled_exception
+		b not_handled_exception
 	.org 0x180
 			b not_handled_exception
 	//Current EL with SPx (we don't handle this)
@@ -69,7 +69,44 @@ el1_spx_serror:
 //--------------------------------
 reset_entry:
 
-	//setup stack
+	//--------------------
+	//-exceptions
+	//--------------------
+
+	//set VBAR EL0
+	ldr x0, =exception_table_start
+	msr VBAR_EL1, x0
+
+	//allow interrupts
+	mrs x0, DAIF
+	msr DAIF, xzr
+	mrs x0, DAIF
+
+	//--------------------
+	//-system timer-------
+	//--------------------
+
+	//set system timer frequency
+	ldr x0, =1000000	//use 1MHZ
+	msr CNTFRQ_EL0, x0
+
+	svc #0
+	//set downcounter
+	ldr x0, =100000
+	msr CNTP_TVAL_EL0, x0	//set downcounter value
+	ldr x0, =0x1
+	msr CNTP_CTL_EL0, x0	//activate downcounter
+
+	loooop:
+		mrs x0, CNTP_CTL_EL0
+		b loooop
+
+	timer_el0:
+		mrs x0, CNTPCT_EL0
+
+	//--------------------
+	//-prepare cpu for c
+	//--------------------
 	ldr x0, =stack_top
 	mov SP, x0
 
@@ -81,8 +118,8 @@ reset_entry:
 		cmp x0, x1
 		bne bss_clear_loop
 
-	//set VBAR EL0
-	ldr x0, =exception_table_start
-	msr VBAR_EL1, x0
-
 	b main
+
+
+
+
