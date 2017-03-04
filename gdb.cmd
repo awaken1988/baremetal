@@ -32,11 +32,11 @@ define cpsr_flags
       print  "IL "
   end
 
-  if ( ($cpsr >> 9) & 0x1 )
-      print  "LITTLEENDIAN "
-  else
-      print  "BIGENDIAN "
-  end
+  #if ( ($cpsr >> 9) & 0x1 )
+  #    print  "BIGENDIAN "
+  #else
+  #    print  "LITTLEENDIAN "
+  #end
 
   if ( ($cpsr >> 8) & 0x1 )
       print  "MASK_A"

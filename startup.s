@@ -79,7 +79,13 @@ reset_entry:
 
 	//allow interrupts
 	mrs x0, DAIF
-	msr DAIF, xzr
+	mov x1, xzr
+	orr x1, x1, #(1<<6)
+	orr x1, x1, #(1<<7)
+	orr x1, x1, #(1<<8)
+	mvn x1, x1
+	and x0, x0, x1
+	msr DAIF, x0
 	mrs x0, DAIF
 
 	//--------------------
@@ -90,16 +96,15 @@ reset_entry:
 	ldr x0, =1000000	//use 1MHZ
 	msr CNTFRQ_EL0, x0
 
-	svc #0
 	//set downcounter
 	ldr x0, =100000
 	msr CNTP_TVAL_EL0, x0	//set downcounter value
 	ldr x0, =0x1
 	msr CNTP_CTL_EL0, x0	//activate downcounter
 
-	//loooop:
-	//	mrs x0, CNTP_CTL_EL0
-	//	b loooop
+	loooop:
+	mrs x0, CNTP_CTL_EL0
+	b loooop
 
 	//timer_el0:
 	//	mrs x0, CNTPCT_EL0
