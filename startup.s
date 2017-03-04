@@ -97,12 +97,12 @@ reset_entry:
 	ldr x0, =0x1
 	msr CNTP_CTL_EL0, x0	//activate downcounter
 
-	loooop:
-		mrs x0, CNTP_CTL_EL0
-		b loooop
+	//loooop:
+	//	mrs x0, CNTP_CTL_EL0
+	//	b loooop
 
-	timer_el0:
-		mrs x0, CNTPCT_EL0
+	//timer_el0:
+	//	mrs x0, CNTPCT_EL0
 
 	//--------------------
 	//-prepare cpu for c
@@ -119,7 +119,3 @@ reset_entry:
 		bne bss_clear_loop
 
 	b main
-
-
-
-
