@@ -1,10 +1,17 @@
+#include "cpu.h"
 #include "kernel_lib.h"
+
 
 int array[32];
 int sum = 0;
 
 int main()
 {
+	//test: enable/disable interrupt
+	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
+	cpu_irq_set(OFF, IRQ_FLAG_F);
+
+
 	//test print output
 	k_print("main() function\r\n");
 	k_print_ull(0x1122334455667788ull, PRINT_FLAG_HEX);

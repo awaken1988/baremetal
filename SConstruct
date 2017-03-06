@@ -6,10 +6,12 @@ env = Environment(  ENV = os.environ,
                     AS='aarch64-none-elf-as',
                     OBJDUMP='aarch64-none-elf-objdump',
                     OBJCOPY='aarch64-none-elf-objcopy',
-                    LINKFLAGS=' -nostartfiles -nodefaultlibs -ggdb -Tlinker.ld -Xlinker -Map=out/program.map')
+                    LINKFLAGS=' -nostartfiles -nodefaultlibs -ggdb -Tlinker.ld -Xlinker -Map=out/program.map',
+                    CFLAGS=' -ggdb ')
 
 program = env.Program('out/program', [      'out/main.c',
                                             'out/kernel_lib.c',
+                                            'out/cpu.c',
                                             'out/startup.s' ])
 env.Clean(program, 'out/program.map')
 
