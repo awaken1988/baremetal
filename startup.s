@@ -7,32 +7,69 @@
 // exception vector table
 //	see infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.den0024a/CHDHCCGJ.html
 //--------------------------------
+.section .text.irqtable
 exception_table_start:
-	//Current EL with SP0 (we don't handle this)
+
+	//current el with sp0
 	.org 0x000
-		b not_handled_exception
+	exception_entry_currel_sp0_syn:
+		b .
 	.org 0x080
-		b not_handled_exception
+	exception_entry_currel_sp0_irq:
+		b .
 	.org 0x100
-		b not_handled_exception
+	exception_entry_currel_sp0_fiq:
+		b .
 	.org 0x180
-		b not_handled_exception
-	//Current EL with SPx (we don't handle this)
+	exception_entry_currel_sp0_serror:
+		b .
+
+	//current el with spx
 	.org 0x200
-		b el1_spx_syn //b c_exception_el1h_syn
+	exception_entry_currel_spx_syn:
+		b .
 	.org 0x280
-		b el1_spx_irq
+	exception_entry_currel_spx_irq:
+		b .
 	.org 0x300
-			b el1_spx_fiq
+	exception_entry_currel_spx_fiq:
+		b .
 	.org 0x380
-			b el1_spx_serror
+	exception_entry_currel_spx_serror:
+		b .
 
-	//the other exceptions are ignored
-	.rept 256
-	b .
-	.endr
+	//lower el with aarch64
+	.org 0x400
+	exception_entry_lowerel_aarch64_syn:
+		b .
+	.org 0x480
+	exception_entry_lowerel_aarch64_irq:
+		b .
+	.org 0x500
+	exception_entry_lowerel_aarch64_fiq:
+		b .
+	.org 0x580
+	exception_entry_lowerel_aarch64_serror:
+		b .
+
+	//lower el with aarch32
+	.org 0x600
+	exception_entry_lowerel_aarch32_syn:
+		b .
+	.org 0x680
+	exception_entry_lowerel_aarch32_irq:
+		b .
+	.org 0x700
+	exception_entry_lowerel_aarch32_fiq:
+		b .
+	.org 0x780
+	exception_entry_lowerel_aarch32_serror:
+		b .
 
 
+
+
+.section .text
 //--------------------------------
 // exception handler
 //--------------------------------
@@ -68,6 +105,8 @@ el1_spx_serror:
 // prepare the cpu for c
 //--------------------------------
 reset_entry:
+
+
 
 	mrs x0, s3_1_c15_c3_0
 

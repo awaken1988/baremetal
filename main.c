@@ -13,8 +13,10 @@ int main()
 	gic_init(GIC_DIST_BASE, GIC_CPU_BASE);
 	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
 	//cpu_timer_init();
+
+	//gic_set_pending(GIC_DIST_BASE);
 	while( true ) {
-		gic_set_pending(GIC_DIST_BASE);
+
 	}
 
 	//test: enable/disable interrupt
