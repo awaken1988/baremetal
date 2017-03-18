@@ -5,7 +5,8 @@ layout regs
 #layout src
 
 #misc breaks
-b gic_distributor_init
+#b gic_init
+b gic_set_pending
 
 
 set print array on

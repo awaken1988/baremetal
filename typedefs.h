@@ -7,6 +7,7 @@ typedef unsigned int              uint32_t;
 typedef unsigned long long        uint64_t;
 
 typedef unsigned long long        uptr_t;
+typedef unsigned long long		  size_t;
 
 typedef unsigned char             bool_t;
 
@@ -16,8 +17,12 @@ typedef unsigned char             bool_t;
 #define OFF (0)
 
 
-#define UINT32_PTR(x) ((volatile uint32_t*)x)
-#define UINT64_PTR(x) ((volatile uint32_t*)x)
+#define UINT32_PTR(x) ((volatile uint32_t*)(x))
+#define UINT64_PTR(x) ((volatile uint32_t*)(x))
+
+#define UINT32_REF(x) ( *(UINT32_PTR(x)) )
+#define UINT64_REF(x) ( *(UINT64_PTR(x)) )
+
 #define UPTR_VAL(x) ((uptr_t)x)
 
 #define BASE_OFFSET_PTR_32(base, offset) 	((uint32_t*)(UPTR_VAL( UPTR_VAL(base)+UPTR_VAL(offset) ) ) )

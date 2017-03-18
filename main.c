@@ -10,12 +10,11 @@ int sum = 0;
 
 int main()
 {
-	gic_distributor_init(GIC_DIST_BASE);
-	gic_cpu_init(GIC_CPU_BASE);
+	gic_init(GIC_DIST_BASE, GIC_CPU_BASE);
 	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
-	cpu_timer_init();
+	//cpu_timer_init();
 	while( true ) {
-
+		gic_set_pending(GIC_DIST_BASE);
 	}
 
 	//test: enable/disable interrupt
