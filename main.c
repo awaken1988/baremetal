@@ -14,7 +14,7 @@ int main()
 	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
 	//cpu_timer_init();
 
-	//gic_set_pending(GIC_DIST_BASE);
+	gic_set_pending(GIC_DIST_BASE);
 	while( true ) {
 
 	}
