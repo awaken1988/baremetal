@@ -1,12 +1,23 @@
 #include "cpu.h"
 #include "kernel_lib.h"
 
+#define GIC_DIST_BASE 0x8000000
+#define GIC_CPU_BASE 0x8010000
+
 
 int array[32];
 int sum = 0;
 
 int main()
 {
+	gic_distributor_init(GIC_DIST_BASE);
+	gic_cpu_init(GIC_CPU_BASE);
+	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
+	cpu_timer_init();
+	while( true ) {
+
+	}
+
 	//test: enable/disable interrupt
 	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
 	cpu_irq_set(OFF, IRQ_FLAG_F);

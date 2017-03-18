@@ -16,10 +16,10 @@ exception_table_start:
 	.org 0x100
 		b not_handled_exception
 	.org 0x180
-			b not_handled_exception
+		b not_handled_exception
 	//Current EL with SPx (we don't handle this)
 	.org 0x200
-		b c_exception_el1h_syn
+		b el1_spx_syn //b c_exception_el1h_syn
 	.org 0x280
 		b el1_spx_irq
 	.org 0x300
@@ -68,6 +68,8 @@ el1_spx_serror:
 // prepare the cpu for c
 //--------------------------------
 reset_entry:
+
+	mrs x0, s3_1_c15_c3_0
 
 	//--------------------
 	//-exceptions

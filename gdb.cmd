@@ -4,6 +4,10 @@ target remote | qemu-system-aarch64 -M virt -cpu cortex-a57 -kernel out/program 
 layout regs
 #layout src
 
+#misc breaks
+b gic_distributor_init
+
+
 set print array on
 set print repeats 0
 
