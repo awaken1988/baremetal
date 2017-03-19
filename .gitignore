@@ -1,1 +1,8 @@
 doc/
+out/
+.cproject
+.gdb.cmd.swp
+.project
+.sconsign.dblite
+.settings/
+

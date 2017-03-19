@@ -63,7 +63,20 @@ typedef union _variant_t
 #define VA_FLOAT(x)		( (variant_t){.m_float = x} )
 #define VA_DOUBLE(x)	( (variant_t){.m_double = x} )
 
+//----------------------------
+//
+// Counted Array
+//
+//----------------------------
 
+//x = typename
+#define KVECTOR_DECLARE(x) struct x ## _array_t { 	size_t count; 		\
+													x*	   elements;	\
+										    	};
+
+//for each type we need arrays
+//	we declare them here
+KVECTOR_DECLARE(variant_t)
 
 
 
