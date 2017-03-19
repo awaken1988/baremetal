@@ -84,6 +84,11 @@ void k_print_ull(	unsigned long long num,
 	k_print(buff);
 }
 
+void k_print_arg(const char* fmt, variant_t* args)
+{
+	return;
+}
+
 
 //-------------------------------
 // allocate memory

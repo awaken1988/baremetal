@@ -1,5 +1,6 @@
 #ifndef KERNEL_LIB_H
 #define KERNEL_LIB_H
+#include "typedefs.h"
 
 typedef unsigned long long size_kt;
 typedef unsigned long long ptr_kt;
@@ -22,6 +23,7 @@ void k_print(const char *s);
 void k_print_ull(	unsigned long long num,
 					enum print_flags_kt flags);
 
+void k_print_arg(const char* fmt, variant_t* args);
 
 
 

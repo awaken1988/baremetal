@@ -10,6 +10,8 @@ int sum = 0;
 
 int main()
 {
+	varargs_test("bla", (variant_t){ .m_double = 1.0f});
+
 	gic_init(GIC_DIST_BASE, GIC_CPU_BASE);
 	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
 	//cpu_timer_init();
