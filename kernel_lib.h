@@ -18,10 +18,12 @@ enum print_flags_kt
 char k_digit_to_hex(int digit);
 char k_digit_to_bin(int digit);
 
-void k_print(const char *s);
+void k_print_str(const char *s);
 
 void k_print_ull(	unsigned long long num,
-					enum print_flags_kt flags);
+					enum print_flags_kt flags,
+					int digits);
+
 
 
 //----------------------------------------------
@@ -33,7 +35,8 @@ typedef struct _k_print_args_t
 	variant_t* elements;
 } k_print_args_t;
 
-void k_print_arg(const char* fmt, variant_t* args);
+void k_print(const char* fmt, variant_t* args);
+void k_print_char(const char ch);
 
 
 

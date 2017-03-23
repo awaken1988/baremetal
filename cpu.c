@@ -86,9 +86,9 @@ void gic_init(uptr_t dist_base, uptr_t cpu_base)
 	uint32_t typer = UINT32_REF( dist_base + GICD_TYPER);
 	uint32_t itl = 32 * ( (typer&0x1F) + 1  );		//extract irq lines
 
-	k_print("GIC: IRQ lines=");
-	k_print_ull(itl, PRINT_FLAG_HEX);
-	k_print("\r\n");
+	//k_print("GIC: IRQ lines=");
+	//k_print_ull(itl, PRINT_FLAG_HEX);
+	//k_print("\r\n");
 
 	/* Disable interrupts */
 	for(size_t iLine=0; iLine<itl/32; iLine++) {

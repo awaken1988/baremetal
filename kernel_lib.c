@@ -1,7 +1,9 @@
 #include "kernel_lib.h"
 
 //-------------------------------
-// print to qemus console
+//
+// console print
+//
 //-------------------------------
 volatile unsigned int * const UART0DR = (unsigned int *) 0x09000000;
 
@@ -37,25 +39,30 @@ char k_digit_to_bin(int digit)
 }
 
 
-void k_print(const char *s)
+void k_print_str(const char *s)
 {
-    while(*s != '\0') { 		/* Loop until end of string */
-         *UART0DR = (unsigned int)(*s); /* Transmit char */
-          s++;			        /* Next char */
+    while(*s != '\0') {
+    	k_print_char(*s);
+        s++;
     }
 }
 
-void k_print_ull(	unsigned long long num,
-					enum print_flags_kt flags)
+void k_print_char(const char ch)
 {
-	char buff[sizeof(num)*8+1];	//max size of the string
+	*UART0DR = (unsigned int)(ch);
+}
+
+
+//! convert num to string
+//!
+//!	buff should have enough place for digits
+void k_print_ull(	unsigned long long num,
+					enum print_flags_kt flags,
+					int digits)
+{
 	int step_width = 0;
 	int num_mask = 0;
-
-	//set array to zero (TODO: create a memset function)
-	for(int i=0; i<sizeof(buff); i++) {
-		buff[i] = 0;
-	}
+	char buff;
 
 	//get the step bit width
 	if( flags & PRINT_FLAG_BIN) {
@@ -67,31 +74,106 @@ void k_print_ull(	unsigned long long num,
 		num_mask = 0xF;
 	}
 
-	//loop through the number
-	for(int i=0; i<sizeof(num)*8; i+=step_width)
-	{
-		const int val = (num>>i) & num_mask;
-		const int char_idx = (sizeof(num)*8-step_width-i) / step_width;
+	for(int iDigit=digits-1; iDigit>=0; iDigit--) {
+
+		const int val = (num>>(4*iDigit)) & num_mask;
 
 		if( flags & PRINT_FLAG_BIN ) {
-			buff[char_idx] = k_digit_to_bin(val);
+			buff = k_digit_to_bin(val);
 		}
 		else {
-			buff[char_idx] = k_digit_to_hex(val);
+			buff = k_digit_to_hex(val);
+		}
+
+		k_print_char(buff);
+	}
+}
+
+
+
+static char peek_char (const char* ptr)
+{
+	return *(ptr+1);
+}
+
+//! print formated char
+//!
+//!	\return last character consumed
+static char* print_formated(char* fmt, variant_t* arg)
+{
+	int digits = 0;
+	char type = '\0';
+	char saved_fmt = *fmt;
+
+	switch( saved_fmt )
+	{
+	case 'x':	digits = sizeof(unsigned long long)*2; break;
+	case 'b':	digits = sizeof(unsigned long long)*8; break;
+		break;
+	default:
+		return fmt;
+	}
+
+	//get digit width
+	for(int i=0; i<2; i++) {
+
+		if( '\0' == peek_char(++fmt) )
+			return fmt;
+		if( 0 == i )
+			digits = 0;
+
+		if( *fmt >= '0' && *fmt <= '9' ) {
+			digits += i * (*(fmt)-48 ); 		//TODO: create defines for ASCII stuff
 		}
 	}
 
-	k_print(buff);
+
+	switch( saved_fmt )
+		{
+		case 'x':
+			k_print_ull(arg->m_u64_t, PRINT_FLAG_HEX, digits);
+			break;
+		case 'b':
+			k_print_ull(arg->m_u64_t, PRINT_FLAG_BIN, digits);
+			break;
+	}
+
+	return fmt+1;
 }
 
-void k_print_arg(const char* fmt, variant_t* args)
+#define NEXT_CHAR_RETURN(fmt) if('\0' == peek_char(fmt) ) return; fmt++;
+
+void k_print(const char* fmt, variant_t* args)
 {
-	return;
+	int arg_idx = 0;
+
+	if( 0 == fmt || '\0' == *fmt )
+		return;
+
+	do
+	{
+		switch(*fmt)
+		{
+			case '\\':
+			{
+				NEXT_CHAR_RETURN(fmt);
+				//do special character here
+			} break;
+
+			case '%':
+			{
+				NEXT_CHAR_RETURN(fmt);
+			} break;
+
+		}
+	} while( *(++fmt) != '\0');
 }
 
 
 //-------------------------------
+//
 // allocate memory
+//
 //-------------------------------
 extern char heap_start;
 extern char heap_end;

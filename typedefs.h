@@ -74,6 +74,8 @@ typedef union _variant_t
 													x*	   elements;	\
 										    	};
 
+#define KVECTOR_CREATE(x, ...) (__VA_ARGS__)
+
 //for each type we need arrays
 //	we declare them here
 KVECTOR_DECLARE(variant_t)
