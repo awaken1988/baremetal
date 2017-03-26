@@ -42,8 +42,6 @@ void k_print_char(const char ch);
 
 
 
-
-
 //-------------------------------
 // allocate memory
 //-------------------------------

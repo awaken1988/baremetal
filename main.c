@@ -10,7 +10,7 @@ int sum = 0;
 
 int main()
 {
-	k_print("%x8 - %b32", (variant_t[]){VA_UNUM(0xBEEF), VA_UNUM(0x5a5a)} );
+	k_print("HEXTEST=0x%x08 - BINTEST=0x%b32", (variant_t[]){VA_UNUM(0xBEEF), VA_UNUM(0x5a5a)} );
 	while(1);
 
 	//gic_init(GIC_DIST_BASE, GIC_CPU_BASE);

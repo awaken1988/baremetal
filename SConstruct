@@ -25,6 +25,12 @@ if 'gdb' in COMMAND_LINE_TARGETS:
     qemugdb = env.Command('gdb', 'out/program', 'aarch64-none-elf-gdb --command=gdb.cmd')
     env.Depends(qemugdb, disassembly)
     env.Depends(qemugdb, rawbinary)
+    
+#start qemu only
+if 'qemu' in COMMAND_LINE_TARGETS:
+    qemu = env.Command('qemu', 'out/program', 'qemu-system-aarch64 -M virt -cpu cortex-a57 -kernel out/program -gdb stdio -S -semihosting & sleep 3')
+    env.Depends(qemu, disassembly)
+    env.Depends(qemu, rawbinary)
 
 
 #--------------------------------------------------------------------------------------------------------   

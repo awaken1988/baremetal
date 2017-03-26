@@ -76,7 +76,7 @@ void k_print_ull(	unsigned long long num,
 
 	for(int iDigit=digits-1; iDigit>=0; iDigit--) {
 
-		const int val = (num>>(4*iDigit)) & num_mask;
+		const int val = (num>>(step_width*iDigit)) & num_mask;
 
 		if( flags & PRINT_FLAG_BIN ) {
 			buff = k_digit_to_bin(val);
@@ -99,7 +99,7 @@ static char peek_char (const char* ptr)
 //! print formated char
 //!
 //!	\return last character consumed
-static char* print_formated(char* fmt, variant_t* arg)
+static const char* print_formated(const char* fmt, variant_t* arg)
 {
 	int digits = 0;
 	char type = '\0';
@@ -116,14 +116,18 @@ static char* print_formated(char* fmt, variant_t* arg)
 
 	//get digit width
 	for(int i=0; i<2; i++) {
-
-		if( '\0' == peek_char(++fmt) )
+		if( '\0' == peek_char(fmt) )
 			return fmt;
+		++fmt;
 		if( 0 == i )
 			digits = 0;
 
 		if( *fmt >= '0' && *fmt <= '9' ) {
-			digits += i * (*(fmt)-48 ); 		//TODO: create defines for ASCII stuff
+			const int mult = (0 == i) ? 10 : 1;
+
+			digits += mult * (*(fmt)-48 ); 		//TODO: create defines for ASCII stuff
+		} else  {
+			return fmt;
 		}
 	}
 
@@ -138,7 +142,7 @@ static char* print_formated(char* fmt, variant_t* arg)
 			break;
 	}
 
-	return fmt+1;
+	return fmt;
 }
 
 #define NEXT_CHAR_RETURN(fmt) if('\0' == peek_char(fmt) ) return; fmt++;
@@ -159,10 +163,14 @@ void k_print(const char* fmt, variant_t* args)
 				NEXT_CHAR_RETURN(fmt);
 				//do special character here
 			} break;
-
 			case '%':
 			{
 				NEXT_CHAR_RETURN(fmt);
+				fmt = print_formated(fmt, &args[arg_idx++]);
+			} break;
+			default:
+			{
+				k_print_char(*fmt);
 			} break;
 
 		}
