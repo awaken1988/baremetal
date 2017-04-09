@@ -1,4 +1,5 @@
 .extern main
+.extern c_exception_el1h_irq
 .global reset_entry
 
 
@@ -30,7 +31,7 @@ exception_table_start:
 		b .
 	.org 0x280
 	exception_entry_currel_spx_irq:
-		b .
+		b c_exception_el1h_irq
 	.org 0x300
 	exception_entry_currel_spx_fiq:
 		b .

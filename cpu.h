@@ -22,6 +22,12 @@ void gic_set_pending(uptr_t dist_base);
 
 void cpu_timer_init();
 
+void cpu_print_state();
+
+//------------------------------
+//asm commands for c usage
+//------------------------------
+u32_t mrs_current_el();
 
 
 #endif /* CPU_H */

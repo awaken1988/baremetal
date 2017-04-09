@@ -107,13 +107,36 @@ void gic_init(uptr_t dist_base, uptr_t cpu_base)
 
 	//int cpu
 	UINT32_REF(cpu_base+GICD_IGROUPR(0) ) 	= 0xffff00ff;
-	UINT32_REF(cpu_base+GICC_PMR) 			= 0x80;
-	UINT32_REF(cpu_base+GICC_CTLR) 			= GICC_CTLR_ENABLEGRP0 | GICC_CTLR_ENABLEGRP1 | GICC_CTLR_FIQEN;
+	UINT32_REF(cpu_base+GICC_PMR) 			= 0xFF;
+	UINT32_REF(cpu_base+GICC_CTLR) 			= GICC_CTLR_ENABLEGRP0 | GICC_CTLR_ENABLEGRP1 | GICC_CTLR_FIQEN
+												| 0x1<<2; //AckCtl
 }
 
 void gic_set_pending(uptr_t dist_base)
 {
 	UINT32_REF(dist_base+GICD_SGIR) = 0x3 | 0x1<<16;
+}
+
+void cpu_print_state()
+{
+	u32_t curr_el = (mrs_current_el()>>2) & 0x3;
+
+	k_print("CPU: EL=%x01\n\r", (variant_t[]){
+				VA_UNUM( curr_el )  });
+
+}
+
+
+u32_t mrs_current_el()
+{
+	vu32_t currEL = 0x0;
+
+	asm volatile("mrs %0, CurrentEL"
+					:"=r"	(currEL)
+					:
+					:);
+
+	return currEL;
 }
 
 

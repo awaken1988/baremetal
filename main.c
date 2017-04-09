@@ -10,16 +10,18 @@ int sum = 0;
 
 int main()
 {
-	k_print("HEXTEST=0x%x08 - BINTEST=0x%b32", (variant_t[]){VA_UNUM(0xBEEF), VA_UNUM(0x5a5a)} );
-	while(1);
+	cpu_print_state();
 
-	//gic_init(GIC_DIST_BASE, GIC_CPU_BASE);
-	//cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
+	//k_print("HEXTEST=0x%x08 - BINTEST=0x%b32", (variant_t[]){VA_UNUM(0xBEEF), VA_UNUM(0x5a5a)} );
+	//while(1);
+
+	gic_init(GIC_DIST_BASE, GIC_CPU_BASE);
+	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
 	//cpu_timer_init();
-	//gic_set_pending(GIC_DIST_BASE);
-	//while( true ) {
-	//
-	//}
+	gic_set_pending(GIC_DIST_BASE);
+	while( true ) {
+
+	}
 
 	//test: enable/disable interrupt
 	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
@@ -60,5 +62,16 @@ void c_exception_el1h_syn()
 	//k_print_ull(sum, PRINT_FLAG_HEX);
 	//k_print("\r\n");
 	//k_print("leave SYNCHRONIOUS EXCEPTION:  EL1h\r\n");
+	asm volatile("eret"); //workaround see above
+}
+
+void c_exception_el1h_irq()
+{
+	asm volatile("nop");
+
+	u32_t iar = UINT32_REF( GIC_CPU_BASE + 0x0c);
+	u32_t aiar = UINT32_REF( GIC_CPU_BASE + 0x20);
+
+
 	asm volatile("eret"); //workaround see above
 }
