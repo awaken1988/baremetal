@@ -12,20 +12,21 @@ int main()
 {
 	cpu_print_state();
 
+
 	//k_print("HEXTEST=0x%x08 - BINTEST=0x%b32", (variant_t[]){VA_UNUM(0xBEEF), VA_UNUM(0x5a5a)} );
 	//while(1);
 
 	gic_init(GIC_DIST_BASE, GIC_CPU_BASE);
 	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
-	//cpu_timer_init();
+	cpu_timer_init();
 	gic_set_pending(GIC_DIST_BASE);
 	while( true ) {
 
 	}
 
 	//test: enable/disable interrupt
-	cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
-	cpu_irq_set(OFF, IRQ_FLAG_F);
+	//cpu_irq_set(ON, IRQ_FLAG_F | IRQ_FLAG_I);
+	//cpu_irq_set(OFF, IRQ_FLAG_F);
 
 
 	//test print output

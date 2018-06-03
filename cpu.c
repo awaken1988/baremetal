@@ -86,9 +86,9 @@ void gic_init(uptr_t dist_base, uptr_t cpu_base)
 	uint32_t typer = UINT32_REF( dist_base + GICD_TYPER);
 	uint32_t itl = 32 * ( (typer&0x1F) + 1  );		//extract irq lines
 
-	//k_print("GIC: IRQ lines=");
-	//k_print_ull(itl, PRINT_FLAG_HEX);
-	//k_print("\r\n");
+	k_print("GIC: IRQ lines=", 0);
+	k_print_ull(itl, PRINT_FLAG_HEX, 8);
+	k_print("\r\n", 0);
 
 	/* Disable interrupts */
 	for(size_t iLine=0; iLine<itl/32; iLine++) {
@@ -117,6 +117,12 @@ void gic_set_pending(uptr_t dist_base)
 	UINT32_REF(dist_base+GICD_SGIR) = 0x3 | 0x1<<16;
 }
 
+void gic_print_iar()
+{
+	k_print("GICC Interrupt ID=%x01\n\r", (variant_t[]){
+		UINT32_REF(0x8010000+GICC_IAR)  });
+}
+
 void cpu_print_state()
 {
 	u32_t curr_el = (mrs_current_el()>>2) & 0x3;
@@ -137,6 +143,25 @@ u32_t mrs_current_el()
 					:);
 
 	return currEL;
+}
+
+u32_t mrs_esr_el1()
+{
+	vu32_t esr = 0x0;
+
+	asm volatile("mrs %0, ESR_EL1"
+					:"=r"	(esr)
+					:
+					:);
+
+	return esr;
+}
+
+void dbg_exception()
+{
+	k_print("HEXTEST=0x%x08", (variant_t[]){VA_UNUM(mrs_esr_el1())} );
+
+	gic_print_iar();
 }
 
 

@@ -2,7 +2,12 @@
 .extern c_exception_el1h_irq
 .global reset_entry
 
-
+.macro vector_entry a_name a_offset
+	.org \a_offset
+	\a_name:
+	bl dbg_exception
+	b .
+.endm
 
 //--------------------------------
 // exception vector table
@@ -10,65 +15,25 @@
 //--------------------------------
 .section .text.irqtable
 exception_table_start:
+	vector_entry exception_entry_currel_sp0_syn			0x000
+	vector_entry exception_entry_currel_sp0_irq			0x080
+	vector_entry exception_entry_currel_sp0_fiq			0x100
+	vector_entry exception_entry_currel_sp0_serror		0x180
 
-	//current el with sp0
-	.org 0x000
-	exception_entry_currel_sp0_syn:
-		b .
-	.org 0x080
-	exception_entry_currel_sp0_irq:
-		b .
-	.org 0x100
-	exception_entry_currel_sp0_fiq:
-		b .
-	.org 0x180
-	exception_entry_currel_sp0_serror:
-		b .
+	vector_entry exception_entry_currel_spx_syn 		0x200
+	vector_entry exception_entry_currel_spx_irq 		0x280
+	vector_entry exception_entry_currel_spx_fiq 		0x300
+	vector_entry exception_entry_currel_spx_serror		0x380
 
-	//current el with spx
-	.org 0x200
-	exception_entry_currel_spx_syn:
-		b .
-	.org 0x280
-	exception_entry_currel_spx_irq:
-		b c_exception_el1h_irq
-	.org 0x300
-	exception_entry_currel_spx_fiq:
-		b .
-	.org 0x380
-	exception_entry_currel_spx_serror:
-		b .
+	vector_entry exception_entry_lowerel_aarch64_syn	0x400
+	vector_entry exception_entry_lowerel_aarch64_irq	0x480
+	vector_entry exception_entry_lowerel_aarch64_fiq	0x500
+	vector_entry exception_entry_lowerel_aarch64_serror	0x580
 
-	//lower el with aarch64
-	.org 0x400
-	exception_entry_lowerel_aarch64_syn:
-		b .
-	.org 0x480
-	exception_entry_lowerel_aarch64_irq:
-		b .
-	.org 0x500
-	exception_entry_lowerel_aarch64_fiq:
-		b .
-	.org 0x580
-	exception_entry_lowerel_aarch64_serror:
-		b .
-
-	//lower el with aarch32
-	.org 0x600
-	exception_entry_lowerel_aarch32_syn:
-		b .
-	.org 0x680
-	exception_entry_lowerel_aarch32_irq:
-		b .
-	.org 0x700
-	exception_entry_lowerel_aarch32_fiq:
-		b .
-	.org 0x780
-	exception_entry_lowerel_aarch32_serror:
-		b .
-
-
-
+	vector_entry exception_entry_lowerel_aarch32_syn	0x600
+	vector_entry exception_entry_lowerel_aarch32_irq	0x680
+	vector_entry exception_entry_lowerel_aarch32_fiq	0x700
+	vector_entry exception_entry_lowerel_aarch32_serror	0x780
 
 .section .text
 //--------------------------------

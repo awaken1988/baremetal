@@ -18,16 +18,22 @@ void gic_cpu_init(uptr_t base);
 
 void gic_init(uptr_t dist_base, uptr_t cpu_base);
 void gic_set_pending(uptr_t dist_base);
+void gic_print_iar();
 
 
 void cpu_timer_init();
 
 void cpu_print_state();
 
+
+
 //------------------------------
 //asm commands for c usage
 //------------------------------
 u32_t mrs_current_el();
+u32_t mrs_esr_el1();
+
+void dbg_exception();
 
 
 #endif /* CPU_H */

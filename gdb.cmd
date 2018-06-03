@@ -1,12 +1,29 @@
 set confirm off
-file out/program
-target remote | qemu-system-aarch64 -M virt -cpu cortex-a57 -kernel out/program -gdb stdio -S -semihosting
+file out/program.elf
+target remote | qemu-system-aarch64 -M virt -cpu cortex-a57 -kernel out/program.elf -gdb stdio -S -semihosting
 layout regs
 #layout src
 
 #misc breaks
 #b gic_init
 b gic_set_pending
+b exception_entry_currel_sp0_syn
+b exception_entry_currel_sp0_irq
+b exception_entry_currel_sp0_fiq
+b exception_entry_currel_sp0_serror
+b exception_entry_currel_spx_syn
+b exception_entry_currel_spx_irq
+b exception_entry_currel_spx_fiq
+b exception_entry_currel_spx_serror
+b exception_entry_lowerel_aarch64_syn
+b exception_entry_lowerel_aarch64_irq
+b exception_entry_lowerel_aarch64_fiq
+b exception_entry_lowerel_aarch64_serror
+b exception_entry_lowerel_aarch32_syn
+b exception_entry_lowerel_aarch32_irq
+b exception_entry_lowerel_aarch32_fiq
+b exception_entry_lowerel_aarch32_serror
+
 
 
 set print array on
