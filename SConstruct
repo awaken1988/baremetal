@@ -3,13 +3,17 @@ import os
 VariantDir('out', './', duplicate=0)
 env = Environment(  ENV = os.environ,
                     CC='aarch64-elf-gcc',
+                    CXX='aarch64-elf-g++',
                     AS='aarch64-elf-as',
                     OBJDUMP='aarch64-elf-objdump',
                     OBJCOPY='aarch64-elf-objcopy',
                     LINKFLAGS=' -nostartfiles -nodefaultlibs -Wl,--build-id=none -ggdb -Tlinker.ld -Xlinker -Map=out/program.map',
-                    CFLAGS=' -ggdb ')
+                    CFLAGS=' -ggdb ',
+                    CXXFLAGS = '-std=c++11')
 
-source = ['out/main.c', 'out/kernel_lib.c','out/cpu.c', 'out/startup.s' ]
+source = [	'out/main.cpp',
+			'out/interrupt/interrupt.cpp',
+			'out/startup.s' ]
 
 program = env.Program('out/program.elf', source)
 env.Clean(program, 'out/program.map')
@@ -50,6 +54,7 @@ def pre_process(env, source):
     env = env.Clone()
     env.Replace(OBJSUFFIX = '.E')
     env.Prepend(CFLAGS = '-E')
+    env.Prepend(CXXFLAGS = '-E ')
     return env.Object(source)
 env.AddMethod(pre_process, 'PreProcess')
 env.Alias('preprocess', env.PreProcess(source))

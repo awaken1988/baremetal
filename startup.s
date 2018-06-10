@@ -5,7 +5,7 @@
 .macro vector_entry a_name a_offset
 	.org \a_offset
 	\a_name:
-	bl dbg_exception
+	//bl dbg_exception
 	b .
 .endm
 
