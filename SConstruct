@@ -9,11 +9,43 @@ env = Environment(  ENV = os.environ,
                     OBJCOPY='aarch64-elf-objcopy',
                     LINKFLAGS=' -nostartfiles -nodefaultlibs -Wl,--build-id=none -ggdb -Tlinker.ld -Xlinker -Map=out/program.map',
                     CFLAGS=' -ggdb ',
-                    CXXFLAGS = '-std=c++11')
+                    CXXFLAGS = '  -ggdb -std=c++11')
 
-source = [	'out/main.cpp',
-			'out/interrupt/interrupt.cpp',
-			'out/startup.s' ]
+#------------------------------ 
+# main sources
+#------------------------------ 
+source = [	'main.cpp',
+			'util/string.cpp',
+			'util/memory.cpp',
+			'util/print.cpp',
+		 ]
+		
+#------------------------------ 
+# arch+board specific sources
+#------------------------------
+arch = ARGUMENTS.get('arch', 0)
+soc = ARGUMENTS.get('soc', 0)
+
+if arch == 'aarch64':
+	source.append('arch/aarch64/startup.s')
+	source.append('arch/arm_common/gic.cpp')
+else:
+	raise "no supported arch=???"
+
+if soc == 'qemu':
+	source.append('soc/qemu/console.cpp')
+	source.append('soc/qemu/misc.cpp')
+else:
+	raise "no supported board=???"
+
+#------------------------------ 
+# do not edit
+#------------------------------
+
+#your can use these defines in the code
+env.Append(CPPDEFINES={'ARCH': arch, 'SOC': soc })
+
+source = ['out/'+x for x in source]
 
 program = env.Program('out/program.elf', source)
 env.Clean(program, 'out/program.map')

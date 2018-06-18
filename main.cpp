@@ -1,10 +1,43 @@
-int array[32];
-int sum = 0;
+#include "util/print.h"
+
+#include "arch/arm_common/gic.h"
+
+class CTest {
+public:
+	int a;
+	int b;
+	int c;
+};
+
+#define  STRINGIFY2(x) STRINGIFY(x)
+#define STRINGIFY(x) #x
 
 int main()
 {
-	while( 1 ) {
+	ns_util::console("--------------------------------------------------").nl();
+	ns_util::console("- SimpleBaremetalOS ARCH=% SOC=%")
+		.arg_str(STRINGIFY2(ARCH))
+		.arg_str(STRINGIFY2(SOC)).nl();
+	ns_util::console("---------------------------------------------------").nl();
 
+	ns_arm_common::gic_init();
+
+
+	ns_util::console("\r\n");
+	ns_util::console("\r\n");
+	ns_util::console("").nl();
+	ns_util::console("Debug output Test \r\n");
+
+	ns_util::console(": hex=%; bin=%    \r\n")
+		.arg_num(0xAFFE, num_format_e::HEX)
+		.arg_num(0xAFFE, num_format_e::BINARY);
+
+	ns_util::console(": hex=%; bin=%    \r\n")
+			.arg_num(0x12345678abcdefULL, num_format_e::HEX)
+			.arg_num(0x12345678abcdefULL, num_format_e::BINARY);
+
+
+	while( 1 ) {
 	}
 
 	return 0;

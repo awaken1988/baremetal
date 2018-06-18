@@ -1,0 +1,21 @@
+EXCEPTION_ENTRY(0x000, exception_entry_currel_sp0_syn)
+EXCEPTION_ENTRY(0x080, exception_entry_currel_sp0_irq)
+EXCEPTION_ENTRY(0x100, exception_entry_currel_sp0_fiq)
+EXCEPTION_ENTRY(0x180, exception_entry_currel_sp0_serror)
+
+EXCEPTION_ENTRY(0x200, exception_entry_currel_spx_syn)
+EXCEPTION_ENTRY(0x280, exception_entry_currel_spx_irq)
+EXCEPTION_ENTRY(0x300, exception_entry_currel_spx_fiq)
+EXCEPTION_ENTRY(0x380, exception_entry_currel_spx_serror)
+
+EXCEPTION_ENTRY(0x400, exception_entry_lowerel_aarch64_syn)
+EXCEPTION_ENTRY(0x480, exception_entry_lowerel_aarch64_irq)
+EXCEPTION_ENTRY(0x500, exception_entry_lowerel_aarch64_fiq)
+EXCEPTION_ENTRY(0x580, exception_entry_lowerel_aarch64_serror)
+
+EXCEPTION_ENTRY(0x600, exception_entry_lowerel_aarch32_syn)
+EXCEPTION_ENTRY(0x680, exception_entry_lowerel_aarch32_irq)
+EXCEPTION_ENTRY(0x700, exception_entry_lowerel_aarch32_fiq)
+EXCEPTION_ENTRY(0x780, exception_entry_lowerel_aarch32_serror)
+
+
