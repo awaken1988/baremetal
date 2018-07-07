@@ -20,7 +20,9 @@ int main()
 		.arg_str(STRINGIFY2(SOC)).nl();
 	ns_util::console("---------------------------------------------------").nl();
 
-	ns_arm_common::gic_init();
+	NsInterrupt::Interrupt* irq = new ns_arm_common::Gic();
+
+	irq->set_handler(0, []() -> void {return;});
 
 
 	ns_util::console("\r\n");

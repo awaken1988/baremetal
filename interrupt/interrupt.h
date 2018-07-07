@@ -15,8 +15,16 @@ namespace NsInterrupt
 
 	constexpr u32_t MAX_EXEPTIONS = 1024;
 
-	void set_handler(int aIrqNum, std::function<void()> aHndler);
-	void set_enabled(int aIrqNum, bool aEnable);
+	class Interrupt
+	{
+	public:
+		virtual void global_enable() = 0;
+		virtual void global_disable() = 0;
+		virtual void set_handler(int aIrqNum, std::function<void()> aHndler) = 0;
+		virtual void set_enabled(int aIrqNum, bool aEnable) = 0;
+
+	};
+
 
 
 }

@@ -150,3 +150,7 @@ void operator delete[](void *p)
     operator delete(p); // Same as regular delete
 }
 
+//another required function for c++ virtual tables
+//TODO: move this to another file
+extern "C" void __cxa_pure_virtual() { while (1); }
+

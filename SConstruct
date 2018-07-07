@@ -9,7 +9,7 @@ env = Environment(  ENV = os.environ,
                     OBJCOPY='aarch64-elf-objcopy',
                     LINKFLAGS=' -nostartfiles -nodefaultlibs -Wl,--build-id=none -ggdb -Tlinker.ld -Xlinker -Map=out/program.map',
                     CFLAGS=' -ggdb ',
-                    CXXFLAGS = '  -ggdb -std=c++11')
+                    CXXFLAGS = '  -ggdb -std=c++11 -fno-rtti -fno-exceptions ')
 
 #------------------------------ 
 # main sources
