@@ -6,3 +6,4 @@ out/
 .sconsign.dblite
 .settings/
 
+.vscode
