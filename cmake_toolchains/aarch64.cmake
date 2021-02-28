@@ -1,4 +1,4 @@
-set(TOOLCHAIN_PREFIX "arm-none-eabi-")
+set(TOOLCHAIN_PREFIX "aarch64-none-elf-")
 
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
@@ -18,7 +18,8 @@ enable_language(C ASM)
 function(add_qemu_gdb_server aProgramElf)
     add_custom_target(
         qemu_gdb_server
-        COMMAND "qemu-system-arm" --machine vexpress-a9 -kernel "${aProgramElf}" -s -S -semihosting)
+        message("TODO: start aarh64 qemu environment")
+        #COMMAND "qemu-system-arm" --machine vexpress-a9 -kernel "${aProgramElf}" -s -S -semihosting)
 endfunction()
 
 function(add_disassembly aProgramElf)

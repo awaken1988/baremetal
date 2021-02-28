@@ -6,11 +6,11 @@ MEMORY
 SEARCH_DIR(out)
 ENTRY(_reset_entry)
 
-
+ 
 
 SECTIONS
 {
-  .text : { startup.o(.text) }  
+  .text : { *startup*(.text) }  
 
   .text : { *(.text) }          >RAM
 

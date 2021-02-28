@@ -1,1 +1,0 @@
-qemu-system-arm --machine vexpress-a9 -kernel out/program.elf -s -S -semihosting 
