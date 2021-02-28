@@ -2,30 +2,34 @@ Snippets of baremetal applications for arm, aarch64
 
 # Example Projects
 
-## arm-c-cmake
-Example which runs on qemu vexpress-a9. It also an example for using cmake for embedded
-Usage:
+To compile and start the binary with qemu run the following (arm-c-qemu used as example):
 ```
  mkdir build/
  cd build/
- cmake -G "MingGW Makefiles" ../arm-qemu
+ cmake -G "MingGW Makefiles" ../arm-c-qemu
  make qemu_gdb_server
 ```
-Now connect gdb to localhost:1234
+Now connect with gdb to localhost:1234. Now you can step through the assembly
+
+
+## arm-c-qemu
+Example which runs on qemu vexpress-a9. It also an example for using cmake for embedded
 
 ## arm-qemu-cpp
-Simple project which runs C++ on embedded
+Example using cpp on embedded
 
-_Note: This project use SCons as build system. See SConstruct file for available build targets_
+## aarch64-c-qemu
+Example project for aarch64.
 
-## aarch64-qemu-c
-An example for a aarch64 baremetal project with some code snippets for printing and interrupts.
-The example runs on qemu
+_Note: currently no qemu settings added_
 
-_Note: This project use SCons as build system. See SConstruct file for available build targets_
+## aarch64-c-qemu-irq
+Example using interrupts. E.g timer interrupt
+
+_Note: This is an older project using scons instead of cmake. See SConstruct to see the build targets_
 
 # Dependencies
-- cmake
+- cmake, make (or other generators)
 - arm-none-eabi-gcc and/or aarch64-none-elf-gcc
 - qemu
 
