@@ -5,5 +5,5 @@ out/
 .project
 .sconsign.dblite
 .settings/
-
+/build/
 .vscode
