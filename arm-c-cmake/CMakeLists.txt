@@ -5,6 +5,10 @@ project(main C)
 
 add_executable(my main.c startup.s)
 
+#compiler
+target_compile_options(my PRIVATE "-ggdb")
+
+
 #linker
 set(LINKER_SCRIPT "linker.ld")
 set(MAP_FILE "${PROJECT_BINARY_DIR}/my.map")
