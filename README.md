@@ -9,7 +9,7 @@ To compile and start the binary with qemu run the following (arm-c-qemu used as 
  cmake -G "MingGW Makefiles" ../arm-c-qemu
  make qemu_gdb_server
 ```
-Now connect with gdb to localhost:1234. Now you can step through the assembly
+Now connect with gdb to localhost:1234 and step through the application
 
 
 ## arm-c-qemu
