@@ -15,7 +15,7 @@ Now connect with gdb to localhost:1234. Now you can step through the assembly
 ## arm-c-qemu
 Example which runs on qemu vexpress-a9. It also an example for using cmake for embedded
 
-## arm-qemu-cpp
+## arm-cpp-qemu
 Example using cpp on embedded
 
 ## aarch64-c-qemu
