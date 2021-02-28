@@ -1,6 +1,6 @@
-Snippets of baremetal arm and aarch64 programs
+Snippets of baremetal applications for arm, aarch64 
 
-#Example Projects
+# Example Projects
 
 ## arm-c-make
 Example which runs on qemu vexpress-a9. It also an example for using cmake for embedded
