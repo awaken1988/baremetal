@@ -7,7 +7,7 @@ set(MY_EXEC "program")
 add_executable(${MY_EXEC} src/main.cpp src/std_impl.c startup.s)
 
 #compiler
-target_compile_options(${MY_EXEC} PRIVATE -g1 -mcpu=cortex-a57)
+target_compile_options(${MY_EXEC} PRIVATE -ggdb -mcpu=cortex-a57)
 
 
 #linker

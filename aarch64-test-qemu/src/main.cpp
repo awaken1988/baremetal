@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 
-volatile unsigned int* UART0 = (volatile unsigned int*)0x10009000;
+volatile unsigned int* UART0 = (volatile unsigned int*)0x09000000;
 
 class Test
 {
@@ -25,6 +25,9 @@ Test mytest(3);
 
 int main()
 {
+    int* num = new int(42);
+
+
     int a = mytest.get();
 
     a++;

@@ -16,15 +16,6 @@ SECTIONS
 
   .data : { *(.data) }          >RAM
 
-  .bss :
-  {
-    . = ALIGN(8);
-    __bss_start__ = .;
-    *(.bss) *(COMMON)
-    . = ALIGN(8);
-    __bss_end__ = .;
-  } >RAM
-
 .preinit_array     :
 {
   PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -48,7 +39,16 @@ SECTIONS
   PROVIDE_HIDDEN (__fini_array_end = .);
 } > RAM
 
-  .heap :
+  .bss (NOLOAD) :
+  {
+    . = ALIGN(8);
+    __bss_start__ = .;
+    *(.bss) *(COMMON)
+    . = ALIGN(8);
+    __bss_end__ = .;
+  } >RAM
+
+  .heap(NOLOAD) :
   {
     . = ALIGN(0x100000);
     heap_start = .;

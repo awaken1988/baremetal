@@ -1,6 +1,8 @@
 #include <unistd.h>
+#include <errno.h>
 
-static volatile unsigned int* UART0 = (volatile unsigned int*)0x10009000;
+
+static volatile unsigned int* UART0 = (volatile unsigned int*)0x09000000;
 
 _READ_WRITE_RETURN_TYPE _write(int fd, const void *buf, size_t count)
 {
@@ -53,9 +55,22 @@ int brk(void *addr)
     return 0;
 }
 
+extern void* heap_start;
+extern void* heap_end;
 void* _sbrk(intptr_t increment)
 {
-    
+    static uint8_t* heap_current = &heap_start;
+    uint8_t*  end = &heap_end;
+
+    if( (heap_current+increment) > end ) {
+        errno = ENOMEM;
+        return -1;
+    }
+
+    uint8_t* old_current = heap_current;
+    heap_current += increment;
+
+    return old_current;
 }
 
 void _exit(int status)
