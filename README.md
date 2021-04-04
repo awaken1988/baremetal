@@ -11,14 +11,6 @@ To compile and start the binary with qemu run the following (arm-c-qemu used as 
 ```
 Now connect with gdb to localhost:1234 and step through the application
 
-
-## arm-c-qemu
-Example which runs on qemu vexpress-a9. It also an example for using cmake for embedded
-
-## arm-cpp-qemu
-Example using cpp on embedded
-_Note: more fancy std functions like cout may fail due to missing crt runtime init_
-
 ## aarch64-c-qemu
 Example project for aarch64.
 
@@ -31,6 +23,16 @@ _Note: This is an older project using scons instead of cmake. See SConstruct to 
 
 ## aarch64-cpp-qemu
 Example of using c++ on aarch64. This example uses std::cout to print to qemu's serial console
+
+## arm-c-qemu
+Example which runs on qemu vexpress-a9. It also an example for using cmake for embedded
+
+## arm-cpp-qemu
+Example using cpp on embedded
+_Note: more fancy std functions like cout may fail due to missing crt runtime init_
+
+## mini-kernel
+_WIP_ Test Cpu Interrupts, MMU and other
 
 # Dependencies
 - cmake, make (or other generators)
