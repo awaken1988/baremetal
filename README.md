@@ -17,6 +17,7 @@ Example which runs on qemu vexpress-a9. It also an example for using cmake for e
 
 ## arm-cpp-qemu
 Example using cpp on embedded
+_Note: more fancy std functions like cout may fail due to missing crt runtime init_
 
 ## aarch64-c-qemu
 Example project for aarch64.
@@ -27,6 +28,9 @@ _Note: currently no qemu settings added_
 Example using interrupts. E.g timer interrupt
 
 _Note: This is an older project using scons instead of cmake. See SConstruct to see the build targets_
+
+## aarch64-cpp-qemu
+Example of using c++ on aarch64. This example uses std::cout to print to qemu's serial console
 
 # Dependencies
 - cmake, make (or other generators)
