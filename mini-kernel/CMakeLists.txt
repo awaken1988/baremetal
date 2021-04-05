@@ -5,14 +5,17 @@ include("../cmake_toolchains/aarch64_test.cmake")
 
 project(main C)
 
+set(STARTUP_ASM arch/aarch64/startup.S)
+
 add_executable(kernel 
     main.cpp 
     std_impl.c 
-    arch/aarch64/startup.s  
+    ${STARTUP_ASM}
     arch/aarch64/aarch64.cpp
     board/qemu_aarch64/board.cpp
 )
 target_include_directories(kernel PRIVATE include)
+set_source_files_properties(${STARTUP_ASM} PROPERTIES COMPILE_FLAGS "-x assembler-with-cpp")
 
 
 #aarch64 specific
