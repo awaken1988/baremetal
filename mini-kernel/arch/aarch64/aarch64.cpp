@@ -65,6 +65,12 @@ uint32_t mrs_current_el()
 	return currEL;
 }
 
+//---------------------------
+//interrupt handlers
+//---------------------------
 
-
+extern "C" void __attribute__((interrupt)) currel_spx_syn__handler(void) {
+   int a = 0;
+   a++;
+}
 

@@ -34,9 +34,14 @@ _Note: more fancy std functions like cout may fail due to missing crt runtime in
 ## mini-kernel
 _WIP_ Test Cpu Interrupts, MMU and other
 
+# Reference
+*	Project
+    *   [armv8-bare-metal.git](https://github.com/NienfengYao/armv8-bare-metal.git)
+
 # Dependencies
 - cmake, make (or other generators)
-- arm-none-eabi-gcc and/or aarch64-none-elf-gcc
+- arm-none-eabi-gcc
+- aarch64-none-elf-gcc
 - qemu
 
 # Dependencies (Optional)
