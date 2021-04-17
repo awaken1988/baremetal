@@ -1,7 +1,7 @@
 #ifndef AARCH64_H
 #define AARCH64_H
 
-#include <stdint.h>
+#include "mk_types.h"
 
 typedef enum
 {
@@ -35,10 +35,6 @@ typedef enum
 uint32_t mrs_current_el();
 
 void cpu_irq_set(bool enable, interrupt_flag_t irq);
-void gic_distributor_init(uintptr_t base);
-void gic_cpu_init(uintptr_t base);
-void gic_init(uintptr_t dist_base, uintptr_t cpu_base);
-void gic_set_pending(uintptr_t dist_base);
 void cpu_timer_init();
 void cpu_print_state();
 

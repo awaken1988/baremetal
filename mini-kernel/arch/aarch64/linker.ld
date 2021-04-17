@@ -10,7 +10,9 @@ ENTRY(_reset_entry)
 
 SECTIONS
 {
-  .text : { *startup*(.text) }  
+  .text : { *(.text.irqtable) }  
+
+  .text : { *(.text.reset_entry) }  
 
   .text : { *(.text) }          >RAM
 

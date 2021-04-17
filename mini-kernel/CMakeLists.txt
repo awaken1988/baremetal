@@ -10,6 +10,7 @@ add_executable(kernel
     std_impl.c 
     arch/aarch64/startup.s  
     arch/aarch64/aarch64.cpp
+    arch/aarch64/gic.cpp
     board/qemu_aarch64/board.cpp
 )
 target_include_directories(kernel PRIVATE include)
@@ -17,7 +18,8 @@ target_include_directories(kernel PRIVATE include)
 
 #aarch64 specific
 #   TODO: make this configurable from commandline
-target_include_directories(kernel PRIVATE arch/aarch64/include )
+target_include_directories(kernel PRIVATE arch/aarch64 )
+target_include_directories(kernel PRIVATE board/qemu_aarch64 )
 
 
 
@@ -33,4 +35,4 @@ target_link_options(kernel PRIVATE "-T${CMAKE_CURRENT_SOURCE_DIR}/${LINKER_SCRIP
 target_link_options(kernel PRIVATE "-Wl,-Map,${MAP_FILE}")
 
 add_qemu_gdb_server( $<TARGET_FILE:kernel>  )
-add_disassembly( kernel )
+#add_disassembly( kernel )
