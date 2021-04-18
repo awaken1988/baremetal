@@ -38,6 +38,39 @@ void cpu_irq_set(bool enable, interrupt_flag_t irq);
 void cpu_timer_init();
 void cpu_print_state();
 
+#define PUSH_CPUREGS \
+  __asm volatile("stp	x29, x30, [sp, #-16]!"); \
+  __asm volatile("stp	x27, x28, [sp, #-16]!"); \
+  __asm volatile("stp	x25, x26, [sp, #-16]!"); \
+  __asm volatile("stp	x23, x24, [sp, #-16]!"); \
+  __asm volatile("stp	x21, x22, [sp, #-16]!"); \
+  __asm volatile("stp	x19, x20, [sp, #-16]!"); \
+  __asm volatile("stp	x17, x18, [sp, #-16]!"); \
+  __asm volatile("stp	x15, x16, [sp, #-16]!"); \
+  __asm volatile("stp	x13, x14, [sp, #-16]!"); \
+  __asm volatile("stp	x11, x12, [sp, #-16]!"); \
+  __asm volatile("stp	x9, x10, [sp, #-16]! "); \
+  __asm volatile("stp	x7, x8, [sp, #-16]!  "); \
+  __asm volatile("stp	x5, x6, [sp, #-16]!  "); \
+  __asm volatile("stp	x3, x4, [sp, #-16]!  "); \
+  __asm volatile("stp	x1, x2, [sp, #-16]!  ");
+
+#define POP_CPUREGS \
+  __asm volatile("ldp	x1, x2, [sp], #16  "); \
+  __asm volatile("ldp	x3, x4, [sp], #16  "); \
+  __asm volatile("ldp	x5, x6, [sp], #16  "); \
+  __asm volatile("ldp	x7, x8, [sp], #16  "); \
+  __asm volatile("ldp	x9, x10, [sp], #16 "); \
+  __asm volatile("ldp	x11, x12, [sp], #16"); \
+  __asm volatile("ldp	x13, x14, [sp], #16"); \
+  __asm volatile("ldp	x15, x16, [sp], #16"); \
+  __asm volatile("ldp	x17, x18, [sp], #16"); \
+  __asm volatile("ldp	x19, x20, [sp], #16"); \
+  __asm volatile("ldp	x21, x22, [sp], #16"); \
+  __asm volatile("ldp	x23, x24, [sp], #16"); \
+  __asm volatile("ldp	x25, x26, [sp], #16"); \
+  __asm volatile("ldp	x27, x28, [sp], #16"); \
+  __asm volatile("ldp	x29, x30, [sp], #16"); 
 
 
 #endif // AARCH64_H

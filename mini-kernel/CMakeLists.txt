@@ -21,6 +21,7 @@ set_source_files_properties(${STARTUP_ASM} PROPERTIES COMPILE_FLAGS "-x assemble
 
 #aarch64 specific
 #   TODO: make this configurable from commandline
+target_include_directories(kernel PRIVATE ./ )
 target_include_directories(kernel PRIVATE arch/aarch64 )
 target_include_directories(kernel PRIVATE board/qemu_aarch64 )
 
@@ -38,4 +39,4 @@ target_link_options(kernel PRIVATE "-T${CMAKE_CURRENT_SOURCE_DIR}/${LINKER_SCRIP
 target_link_options(kernel PRIVATE "-Wl,-Map,${MAP_FILE}")
 
 add_qemu_gdb_server( $<TARGET_FILE:kernel>  )
-#add_disassembly( kernel )
+add_disassembly( kernel )

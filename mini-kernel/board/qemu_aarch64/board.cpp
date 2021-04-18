@@ -17,4 +17,24 @@ void mk_arch_prepare_scheduler()
 	}
 }
 
+//--------------------------
+//irq handlers
+//--------------------------
+
+extern "C" void currel_spx_irq__handle_iml()
+{
+	const iar_t iar = gic_start_irq(GIC_CPU_BASE);
+
+	gic_end_irq(GIC_CPU_BASE, iar);
+}
+
+extern "C" void currel_spx_irq__handle()
+{
+	PUSH_CPUREGS
+
+	__asm volatile(" bl currel_spx_irq__handle_iml");
+
+	POP_CPUREGS
+}
+
 

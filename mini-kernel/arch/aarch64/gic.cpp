@@ -39,3 +39,18 @@ void gic_set_pending(uptr_t dist_base)
 {
 	UINT32_REF(dist_base+GICD_SGIR) = 0x3 | 0x1<<16;
 }
+
+iar_t gic_start_irq(uintptr_t cpu_base)
+{
+	iar_t ret;
+
+	ret.val = *(UINT32_PTR(cpu_base + GICC_IAR));
+
+	return ret;
+
+}
+
+void gic_end_irq(uintptr_t cpu_base, iar_t content)
+{
+	*UINT32_PTR(cpu_base + GICC_EOIR) = content.val;
+}

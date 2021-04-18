@@ -4,6 +4,7 @@
 #include "mk_types.h"
 
 
+
 #define GICC_CTLR		(0x000)
 #define GICC_PMR		(0x004)
 #define GICC_IAR		(0x00C)
@@ -31,5 +32,18 @@
 void gic_init(uptr_t dist_base, uptr_t cpu_base);
 void gic_enable_irq(uptr_t dist_base);
 void gic_set_pending(uintptr_t dist_base);
+
+union iar_t {
+    uint32_t val;
+
+    struct {
+        uint32_t irq_id :10;
+        uint32_t cpu_id :3;
+    } reg;
+   
+};
+
+iar_t gic_start_irq(uintptr_t cpu_base);
+void          gic_end_irq(uintptr_t cpu_base, iar_t content);
 
 #endif // GIC_H
