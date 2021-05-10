@@ -35,6 +35,7 @@ _Note: more fancy std functions like cout may fail due to missing crt runtime in
 _WIP_ Test Cpu Interrupts, MMU and other
 
 # Reference
+*   https://embeddedartistry.com/blog/2019/04/17/exploring-startup-implementations-newlib-arm/
 *	Project
     *   [armv8-bare-metal.git](https://github.com/NienfengYao/armv8-bare-metal.git)
 
