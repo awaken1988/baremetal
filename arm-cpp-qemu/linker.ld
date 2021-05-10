@@ -16,7 +16,6 @@ SECTIONS
   .text : { *startup*(.text) }  >RAM
 
   .text : { 
-    KEEP( *crt0*(.text) )
     *(.text) 
 
     .gnu.linkonce.t.* }         >RAM

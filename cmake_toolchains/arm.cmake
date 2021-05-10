@@ -4,7 +4,7 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 set(CMAKE_C_COMPILER "${TOOLCHAIN_PREFIX}gcc")
 set(CMAKE_CXX_COMPILER "${TOOLCHAIN_PREFIX}g++")
-set(CMAKE_EXE_LINKER_FLAGS "--specs=nosys.specs -mcpu=cortex-a9" CACHE INTERNAL "") #-Wl,--gc-sections breaks _init: code
+set(CMAKE_EXE_LINKER_FLAGS "--specs=nosys.specs -mcpu=cortex-a9 -Wl,--gc-sections" CACHE INTERNAL "") #-Wl,--gc-sections breaks _init: code
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
