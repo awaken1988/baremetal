@@ -83,6 +83,10 @@ int main()
     while(1) {
         CBase* base0 = new CDerived0();
         CBase* base1 = new CDerived1();
+
+        base0->set();
+        base1->set();
+
     }
 
     return 0;

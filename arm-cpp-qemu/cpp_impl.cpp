@@ -14,7 +14,13 @@ namespace __cxxabiv1
 
 void* operator new(size_t size)
 {
-    return malloc(size);
+    void* ret = NULL;
+
+    ret = malloc(size);
+
+    while(!ret) {
+        __asm volatile("nop");
+    }
 }
 
 void operator delete(void* ptr)

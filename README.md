@@ -36,6 +36,7 @@ _WIP_ Test Cpu Interrupts, MMU and other
 
 # Reference
 *   https://embeddedartistry.com/blog/2019/04/17/exploring-startup-implementations-newlib-arm/
+*   https://chromium.googlesource.com/chromiumos/third_party/u-boot/+/stabilize-5656.B/arch/arm/cpu/armv7/start.S
 *	Project
     *   [armv8-bare-metal.git](https://github.com/NienfengYao/armv8-bare-metal.git)
 
