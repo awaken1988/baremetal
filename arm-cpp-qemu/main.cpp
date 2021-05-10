@@ -1,5 +1,30 @@
+#include <vector>
+
+
+
+
 volatile unsigned int* UART0 = (volatile unsigned int*)0x10009000;
 
+
+//Global
+class GlobalTest
+{
+public:
+    GlobalTest() 
+    {
+        *UART0 = 'c';
+        m_a = 1;
+        m_b = m_a + 1; 
+    }
+protected:
+    int m_a;
+    int m_b;
+};
+
+GlobalTest global_test;
+
+
+//Simple Class
 class MyClass 
 {
 public:
@@ -9,15 +34,55 @@ public:
     }
 };
 
+//Virtual class
+class CBase 
+{
+public:
+    virtual ~CBase() {
+
+    }
+
+    virtual void set() {
+        m_val = 0x1;
+        *UART0 = 'B';
+    }
+
+    int m_val = 0xcc;
+};
+
+class CDerived0 : public CBase
+{
+public:
+    virtual void set() override {
+        m_val = 0x2;
+        *UART0 = '0';
+    }
+};
+
+class CDerived1 : public CBase
+{
+public:
+    virtual void set() override {
+        m_val = 0x2;
+        *UART0 = '1';
+    }
+};
+
+
+
+
 
 int main()
 {
+    int* a = new int(1);
+
     MyClass x;
 
-     *UART0 = 'a';
+    *UART0 = 'a';
 
     while(1) {
-         
+        CBase* base0 = new CDerived0();
+        CBase* base1 = new CDerived1();
     }
 
     return 0;

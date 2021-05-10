@@ -1,3 +1,6 @@
+HEAPSIZE  = 1024;
+STACKSIZE = 1024;
+
 MEMORY
 {
   RAM (rwx) : org = 0x48000000, l = 32M
@@ -6,7 +9,7 @@ MEMORY
 SEARCH_DIR(out)
 ENTRY(_reset_entry)
 
-
+ 
 
 SECTIONS
 {
@@ -16,24 +19,54 @@ SECTIONS
 
   .data : { *(.data) }          >RAM
 
-  .bss :
+  .ARM.exidx : {
+      __exidx_start = .;
+      *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+      __exidx_end = .;
+  } > RAM
+
+
+  .preinit_array     :
   {
-    . = ALIGN(8);
+    PROVIDE_HIDDEN (__preinit_array_start = .);
+    KEEP (*(.preinit_array))
+    PROVIDE_HIDDEN (__preinit_array_end = .);
+  } > RAM
+
+  .init_array     :
+  {
+    PROVIDE_HIDDEN (__init_array_start = .);
+    KEEP (*(SORT(.init_array.*)))
+    KEEP (*(.init_array ))
+    PROVIDE_HIDDEN (__init_array_end = .);
+  } > RAM
+
+  .fini_array     :
+  {
+    PROVIDE_HIDDEN (__fini_array_start = .);
+    KEEP (*(SORT(.fini_array.*)))
+    KEEP (*(.fini_array ))
+    PROVIDE_HIDDEN (__fini_array_end = .);
+  } > RAM
+
+  .bss (NOLOAD) :
+  {
+    . = ALIGN(16);
     __bss_start__ = .;
     *(.bss) *(COMMON)
-    . = ALIGN(8);
+    . = ALIGN(16);
     __bss_end__ = .;
   } >RAM
 
-  .heap :
+  .heap(NOLOAD) :
   {
-    . = ALIGN(0x100000);
+    . = ALIGN(16);
     heap_start = .;
-    . += 0x100000;
+    . += HEAPSIZE;
     heap_end = .;
   }
 
-  . += 4096;
-  . = ALIGN(8);
+  . += STACKSIZE;
+  . = ALIGN(16);
   __stack = .;
 }

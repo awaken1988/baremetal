@@ -5,3 +5,6 @@ _reset_entry:
     nop
     nop
     b _mainCRTStartup
+
+_stack_init:
+    blx lr
