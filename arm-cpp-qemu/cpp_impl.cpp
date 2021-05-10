@@ -12,6 +12,7 @@ namespace __cxxabiv1
     std::terminate_handler __terminate_handler = Terminate;
 }
 
+static int debug_allocated_size = 0;
 void* operator new(size_t size)
 {
     void* ret = NULL;
@@ -21,6 +22,10 @@ void* operator new(size_t size)
     while(!ret) {
         __asm volatile("nop");
     }
+
+    debug_allocated_size += size;
+
+    return ret;
 }
 
 void operator delete(void* ptr)

@@ -38,6 +38,7 @@ _WIP_ Test Cpu Interrupts, MMU and other
 *   https://embeddedartistry.com/blog/2019/04/17/exploring-startup-implementations-newlib-arm/
 *   https://chromium.googlesource.com/chromiumos/third_party/u-boot/+/stabilize-5656.B/arch/arm/cpu/armv7/start.S
 *   https://www.mikrocontroller.net/articles/GCC:_unbenutzte_Funktionen_entfernen
+*   https://www.reddit.com/r/embedded/comments/n96zth/arm_gcc_produces_weird_init_with_gcsections/
 *	Project
     *   [armv8-bare-metal.git](https://github.com/NienfengYao/armv8-bare-metal.git)
 

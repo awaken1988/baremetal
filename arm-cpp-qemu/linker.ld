@@ -1,4 +1,4 @@
-HEAPSIZE  = 4*1024;
+HEAPSIZE  = 8*1024;
 STACKSIZE = 1024;
 
 MEMORY
@@ -13,11 +13,11 @@ ENTRY(_reset_entry)
 
 SECTIONS
 {
-  .text : { *startup*(.text) }  >RAM
-
   .text : { 
+    *startup*(.text)
     *(.text) 
-
+    KEEP (*(.init))
+    KEEP (*(.fini))
     .gnu.linkonce.t.* }         >RAM
 
   .data : { 

@@ -63,7 +63,7 @@ class CDerived1 : public CBase
 {
 public:
     virtual void set() override {
-        m_val = 0x2;
+        m_val = 0x3;
         *UART0 = '1';
     }
 };
@@ -82,6 +82,8 @@ int main()
 
         base0->set();
         base1->set();
+
+        __asm volatile("nop");
 
         //throw 0xb33f;
     }
