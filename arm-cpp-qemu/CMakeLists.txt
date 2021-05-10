@@ -9,7 +9,12 @@ add_executable(${MY_EXEC} main.cpp startup.s std_impl.c cpp_impl.cpp)
 #compiler
 #target_compile_options(${MY_EXEC} PRIVATE "-ggdb" "-fno-exceptions" "-fno-unwind-tables" "-fno-asynchronous-unwind-tables" "-fno-rtti" )
 #target_compile_options(${MY_EXEC} PRIVATE "-ggdb" "-mapcs-frame" "-fno-rtti" )
-target_compile_options(${MY_EXEC} PRIVATE "-ggdb" "-fno-rtti" "-mcpu=cortex-a9" )
+target_compile_options(${MY_EXEC} PRIVATE 
+    "-ggdb" 
+    "-mcpu=cortex-a9"
+    "-ffunction-sections" "-fdata-sections"
+    "-fno-rtti" "-fno-unwind-tables" "-fno-asynchronous-unwind-tables" 
+     )
 
 #linker
 set(LINKER_SCRIPT "linker.ld")

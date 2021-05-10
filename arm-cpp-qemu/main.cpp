@@ -1,4 +1,4 @@
-#include <vector>
+#include <array>
 
 
 
@@ -68,10 +68,6 @@ public:
     }
 };
 
-
-
-
-
 int main()
 {
     int* a = new int(1);
@@ -87,6 +83,7 @@ int main()
         base0->set();
         base1->set();
 
+        //throw 0xb33f;
     }
 
     return 0;
@@ -95,8 +92,7 @@ int main()
 extern "C" {
     void exit(int status)
     {
-       
-
+        //TODO: print an error message
         while(1);
     }
 }

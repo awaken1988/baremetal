@@ -13,11 +13,17 @@ ENTRY(_reset_entry)
 
 SECTIONS
 {
-  .text : { *startup*(.text) }  
+  .text : { *startup*(.text) }  >RAM
 
-  .text : { *(.text) }          >RAM
+  .text : { 
+    KEEP( *crt0*(.text) )
+    *(.text) 
 
-  .data : { *(.data) }          >RAM
+    .gnu.linkonce.t.* }         >RAM
+
+  .data : { 
+    *(.data)
+    .gnu.linkonce.d.* }         >RAM
 
   .ARM.exidx : {
       __exidx_start = .;
@@ -53,7 +59,7 @@ SECTIONS
   {
     . = ALIGN(16);
     __bss_start__ = .;
-    *(.bss) *(COMMON)
+    *(.bss) *(COMMON) .gnu.linkonce.b.*
     . = ALIGN(16);
     __bss_end__ = .;
   } >RAM
