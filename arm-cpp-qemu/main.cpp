@@ -1,5 +1,7 @@
 #include <array>
-
+#include <memory>
+#include <array>
+#include <list>
 
 
 
@@ -68,6 +70,66 @@ public:
     }
 };
 
+constexpr size_t array_size = 4;
+
+void simple_ptr_array()
+{
+    #if ARRAY_METHOD == 1
+        std::array<CBase*, array_size> base_array = {nullptr, nullptr, nullptr, nullptr};
+	#else
+        CBase* base_array[array_size];
+    #endif
+
+    for(int i=0; i<array_size; i++) {
+        if( i%2 == 0 ) {
+            base_array[i] = new CDerived0;
+        }
+        else {
+            base_array[i] = new CDerived1;
+        }
+    }
+
+    for(int i=0; i<array_size; i++) {
+        base_array[i]->set();
+    }
+
+     for(int i=0; i<array_size; i++) {
+         int test = base_array[i]->m_val;
+     }
+}
+
+void simple_stdlist()
+{
+	std::list<int> mylist;
+
+	mylist.push_back(1);
+    mylist.push_back(2);
+    mylist.push_back(3);
+    mylist.push_back(4);
+}
+
+void simple_sharedptr_array()
+{
+   std::array<std::shared_ptr<CBase>, array_size> base_array;
+
+    for(int i=0; i<array_size; i++) {
+        if( i%2 == 0 ) {
+            base_array[i] = std::shared_ptr<CBase>(new CDerived1);
+        }
+        else {
+            base_array[i] = std::shared_ptr<CBase>(new CDerived0);
+        }
+    }
+
+    for(int i=0; i<array_size; i++) {
+        base_array[i]->set();
+    }
+
+     for(int i=0; i<array_size; i++) {
+         int test = base_array[i]->m_val;
+     }
+}
+
 int main()
 {
     int* a = new int(1);
@@ -76,17 +138,12 @@ int main()
 
     *UART0 = 'a';
 
-    while(1) {
-        CBase* base0 = new CDerived0();
-        CBase* base1 = new CDerived1();
+    simple_ptr_array();
+    simple_sharedptr_array();
+    simple_stdlist();
 
-        base0->set();
-        base1->set();
+    //list
 
-        __asm volatile("nop");
-
-        //throw 0xb33f;
-    }
 
     return 0;
 }
